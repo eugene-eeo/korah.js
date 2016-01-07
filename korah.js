@@ -1,13 +1,16 @@
 Korah = (function() {
   'use strict';
   function toNodes(args) {
-    return args.reduce(function(ns, arg) {
+    var ns = [];
+    for (var i = 0; i < args.length; i++) {
+      var arg = args[i];
       if (arg instanceof Tag)      ns.push(arg.el);
       else if (Array.isArray(arg)) ns = ns.concat(toNodes(arg));
       else if (arg.nodeType)       ns.push(arg);
       else                         ns.push(document.createTextNode(arg));
       return ns;
-    }, []);
+    };
+    return ns;
   };
 
   function Tag(tag, nodes) {
@@ -34,7 +37,7 @@ Korah = (function() {
   };
   fn.addTag = function(tag) {
     tags[tag] = function() {
-      return new Tag(tag, [].slice.call(arguments));
+      return new Tag(tag, arguments);
     };
   };
   return fn;
