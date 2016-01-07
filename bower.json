@@ -1,0 +1,24 @@
+{
+  "name": "korah.js",
+  "main": "korah.js",
+  "authors": [
+    "Eeo Jun <packwolf58@gmail.com>"
+  ],
+  "description": "declarative DOM construction",
+  "moduleType": [],
+  "keywords": [
+    "dom",
+    "template",
+    "declarative",
+    "micro"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
