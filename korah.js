@@ -32,8 +32,8 @@ Korah = (function(window) {
   };
   fn.Tag = Tag;
   fn.tags = tags;
-  fn.register = function(name, fn) {
-    tags[name] = fn.bind(null, tags);
+  fn.register = function(name, f) {
+    tags[name] = f.bind(null, tags);
   };
   fn.addTag = function(tag) {
     tags[tag] = function() {
