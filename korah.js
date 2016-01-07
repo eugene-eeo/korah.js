@@ -1,5 +1,6 @@
-Korah = (function() {
+Korah = (function(window) {
   'use strict';
+
   function toNodes(args) {
     var ns = [];
     for (var i = 0; i < args.length; i++) {
