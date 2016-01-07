@@ -1,7 +1,7 @@
 # Korah.js
 
-Simple microlibrary for declarative DOM construction for
-client-side Javascript.
+Simple microlibrary for declarative DOM construction
+and templating, made for client-side Javascript.
 
 ```js
 var template = Korah(function(t, data) {
