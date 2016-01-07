@@ -8,7 +8,6 @@ Korah = (function() {
       else if (Array.isArray(arg)) ns = ns.concat(toNodes(arg));
       else if (arg.nodeType)       ns.push(arg);
       else                         ns.push(document.createTextNode(arg));
-      return ns;
     };
     return ns;
   };
