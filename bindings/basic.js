@@ -5,6 +5,6 @@
   'a', 'ul', 'ol', 'li',
   'table', 'tr', 'th', 'td',
   'b', 'i', 'u',
-  'br', 'sub', 'sup',
+  'hr', 'br', 'sub', 'sup',
   'input', 'button',
 ].forEach(Korah.addTag);
