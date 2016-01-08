@@ -3,6 +3,8 @@ Korah = (function(window) {
 
   function toNodes(args) {
     var ns = [];
+    if (!args)
+      return ns
     for (var i = 0; i < args.length; i++) {
       var arg = args[i];
       if (arg instanceof Tag)      ns.push(arg.el);
