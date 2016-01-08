@@ -1,47 +1,50 @@
 # Korah.js
 
-Simple microlibrary for declarative DOM construction
-and templating, made for client-side Javascript.
+Simple microlibrary for a fresh take on declarative DOM
+construction and templating, made for client-side Javascript.
+Zero string parsing/with-statement hackery involved.
 
 ```js
 var template = Korah(function(t, data) {
   return t.div(
-    t.h1(data.title),
-    t.h2('Features'),
-    t.ul(data.content.map(function(text) {
+    t.h1(data.title).attrs({id: 'title'}),
+    t.ul(data.features.map(function(text) {
       return t.li(text);
     }))
-  ).attrs({'class': 'klass'});
+  );
 });
-
-template({ title: 'Korah', content: ['simple', 'lightweight'] });
-// <div>
-//   <h1>Korah</h1>
-//   <h2>Features</h2>
-//   <ul>
-//     <li>Simple</li>
-//   </ul>
-// </div>
+document.body.appendChild(template({
+  title: 'Korah',
+  features: ['simple', 'brain-dead easy']
+}));
 ```
 
-Registering your own tags:
+```html
+<div>
+  <h1 id='title'></h1>
+  <ul>
+    <li>simple</li>
+    <li>brain-dead easy</li>
+  </ul>
+</div>
+```
+
+Adding your own custom tags:
 
 ```js
 Korah.register('user', function(t, user) {
   return t.div(
-    t.span('@' + user.username),
-    t.p(user.about_me)
-  );
+    t.h2('@' + user.username),
+    t.p(user.biography),
+  ).attrs({'class': 'user'});
 });
+
+Korah.addTag('custom_elem');
 
 var template = Korah(function(t, data) {
-  return t.user(data.user);
+  return t.div(
+    t.custom_elem(),
+    t.user(data)
+  );
 });
-```
-
-Missing a tag? File a PR if it's commonly used and you want it
-in the library, else register your own:
-
-```js
-Korah.addTag('tag-name');
 ```
