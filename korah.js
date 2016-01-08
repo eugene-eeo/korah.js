@@ -3,19 +3,18 @@ Korah = (function(window) {
 
   function toNodes(args) {
     var ns = [];
-    if (args)
-      for (var i = 0; i < args.length; i++) {
-        var arg = args[i];
-        if (arg instanceof Tag)      ns.push(arg.el);
-        else if (Array.isArray(arg)) ns = ns.concat(toNodes(arg));
-        else                ns.push(document.createTextNode(arg));
-      };
+    for (var i = 0; i < args.length; i++) {
+      var arg = args[i];
+      if (arg instanceof Tag)      ns.push(arg.el);
+      else if (Array.isArray(arg)) ns = ns.concat(toNodes(arg));
+      else                ns.push(document.createTextNode(arg));
+    };
     return ns;
   };
 
   function Tag(tag, nodes) {
     var el = this.el = document.createElement(tag);
-    toNodes(nodes).forEach(el.appendChild.bind(el));
+    toNodes(nodes || []).forEach(el.appendChild.bind(el));
   };
 
   Tag.prototype.attrs = function(obj) {
