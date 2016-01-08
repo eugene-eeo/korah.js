@@ -66,6 +66,21 @@ describe('Korah.Tag', function() {
   });
 });
 
+describe('Korah.tag#attrs', function() {
+  it('adds the properties to the element', function() {
+    var tag = new Korah.Tag('h1');
+    var el  = tag.el;
+    tag.attrs({'class': 'klass', 'id': 'id'});
+    assert(el.getAttribute('class') === 'klass');
+    assert(el.getAttribute('id') === 'id');
+  });
+
+  it('returns the tag object for chaining', function() {
+    var tag = new Korah.Tag('h1');
+    assert(tag.attrs({}) === tag);
+  });
+});
+
 describe('Korah.register', function() {
   it('registers the function on the tags object', function(done) {
     var name = 'not-an-elem'
