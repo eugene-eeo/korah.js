@@ -1,4 +1,4 @@
-Korah = (function(window) {
+Korah = (function() {
   'use strict';
 
   function toNodes(args) {
