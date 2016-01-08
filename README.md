@@ -38,3 +38,10 @@ var template = Korah(function(t, data) {
   return t.user(data.user);
 });
 ```
+
+Missing a tag? File a PR if it's commonly used and you want it
+in the library, else register your own:
+
+```js
+Korah.addTag('tag-name');
+```
