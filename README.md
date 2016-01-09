@@ -1,8 +1,15 @@
 # Korah.js
 
-Simple microlibrary for a fresh take on declarative DOM
-construction and templating, made for client-side Javascript.
-Zero string parsing/with-statement hackery involved.
+Sane, lightweight declarative DOM construction.
+
+ - Weighs in at ~0.8kB minified with bindings.
+ - Extensible with [bindings](bindings/) for HTML tags.
+ - Fully ES5 compliant codebase.
+ - No string parsing/hacks.
+
+Works great with [evee.js](https://github.com/eugene-eeo/evee.js).
+
+## Usage
 
 ```js
 var template = Korah(function(t, data) {
@@ -47,4 +54,10 @@ var template = Korah(function(t, data) {
     t.user(data)
   );
 });
+```
+
+## Installation
+
+```js
+$ bower install eugene-eeo/korah.js
 ```
