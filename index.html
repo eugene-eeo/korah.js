@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'/>
+  <title>Korah.js</title>
+  <style>
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700);
+body {
+  margin: 3em auto;
+  width: 30em;
+  font-size: 16px;
+  font-family: 'Libre Baskerville', Georgia;
+}
+h1 {
+  margin: 0;
+  color: #A97D5D;
+  font-weight: normal;
+}
+#link {
+  display: block;
+  color: #FFF;
+  background-color: #9C9F84;
+  width: 8em;
+  font-size: 0.9em;
+  text-align: center;
+  float: right;
+  padding: 0.5em 0.4em;
+  text-decoration: none;
+}
+#link:hover {
+  background-color: #5C755E;
+}
+.links, h2 {
+  border-bottom: 1px solid #DDD;
+  font-size: 1.1em;
+  font-variant: small-caps;
+  font-weight: bold;
+}
+h2 {
+  margin: 1em 0 0 0;
+  color: #999;
+}
+.toggle {
+  font-weight: bold;
+  text-decoration: none;
+  color: #999;
+  margin-right: 0.5em;
+  border-bottom: 1px solid #EEE transparent;
+}
+.selected {
+  color: #A97D5D;
+  border-bottom: 1px solid #A97D5D;
+  margin-bottom: -1px;
+}
+pre {
+  font-family: Consolas, Monaco, monospace;
+  font-size: 1.1em;
+  margin: 0.5em 0;
+}
+.hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Korah.js</h1>
+  <p>
+    A lightweight and fresh take on browser-side
+    declarative DOM construction and templating, with
+    <i>zero</i> string parsing.
+  </p>
+  <a id='link' href='https://github.com/eugene-eeo/korah.js'>Visit the Github repo</a>
+  <ul>
+    <li>Minifies to (<i>only!</i>) ~0.8kB.</li>
+    <li>Expressive and <i>declarative</i> templates.</li>
+    <li>Extensible tags system.</li>
+  </ul>
+
+  <div class='links'>
+    <a href='#' id='without-btn' class='toggle'>Vanilla JS</a>
+    <a href='#' id='with-btn' class='toggle selected'>Korah.js</a>
+  </div>
+  <pre class='hidden' id='without-pre'>var template = function(data) {
+  var div = document.createElement('div'),
+      h1 = document.createElement('h1'),
+      ul = document.createElement('ul');
+
+  h1.textContent = data.title;
+
+  data.items.forEach(function(text) {
+    var li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+
+  div.appendChild(h1);
+  div.appendChild(ul);
+  return div;
+};</pre>
+  <pre id='with-pre'>var template = Korah(function(t, data) {
+  return t.div(
+    t.h1(data.title),
+    t.ul(data.items.map(function(text) {
+      return t.li(text);
+    }))
+  );
+});</pre>
+
+  <h2>Installation</h2>
+  <pre>$ bower install eugene-eeo/korah.js</pre>
+
+<script>
+!function() {
+  var $ = document.getElementById.bind(document);
+  var with_btn = $('with-btn');
+  var with_pre = $('with-pre');
+  var without_btn = $('without-btn');
+  var without_pre = $('without-pre');
+
+  with_btn.onclick = without_btn.onclick = function(e) {
+    with_btn.classList.toggle('selected');
+    without_btn.classList.toggle('selected');
+    with_pre.classList.toggle('hidden');
+    without_pre.classList.toggle('hidden');
+    e.preventDefault();
+  };
+}();
+</script>
+</body>
+</html>
