@@ -104,5 +104,6 @@ describe('Korah.addTag', function() {
     });
     var el = t();
     assert(el.tagName.toLowerCase() === name);
+    delete Korah.tags[name];
   });
 });
