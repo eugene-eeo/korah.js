@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8'/>
+  <meta name=viewport content="width=device-width, initial-scale=1"/>
   <title>Korah.js</title>
   <style>
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700);
@@ -30,15 +31,12 @@ h1 {
 #link:hover {
   background-color: #5C755E;
 }
-.links, h2 {
+.links {
+  margin: 1em 0 0 0;
   border-bottom: 1px solid #DDD;
   font-size: 1.1em;
   font-variant: small-caps;
   font-weight: bold;
-}
-h2 {
-  margin: 1em 0 0 0;
-  color: #999;
 }
 .toggle {
   font-weight: bold;
@@ -54,10 +52,22 @@ h2 {
 }
 pre {
   font-family: Consolas, Monaco, monospace;
-  font-size: 1.1em;
   margin: 0.5em 0;
+  overflow: auto;
 }
 .hidden { display: none; }
+@media only screen and (max-device-width: 480px) {
+  body {
+    width: inherit;
+    margin: 1.5em 1em;
+  }
+  ul {
+    padding: 0 0 0 0.5em;
+    font-size: 0.9em;
+  }
+  pre { font-size: 0.9em; }
+  #link { font-size: 0.9em; }
+}
   </style>
 </head>
 <body>
@@ -103,10 +113,6 @@ pre {
     }))
   );
 });</pre>
-
-  <h2>Installation</h2>
-  <pre>$ bower install eugene-eeo/korah.js</pre>
-
 <script>
 !function() {
   var $ = document.getElementById.bind(document);
