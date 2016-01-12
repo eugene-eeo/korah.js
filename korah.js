@@ -19,7 +19,7 @@ Korah = (function() {
 
   Tag.prototype.attrs = function(obj) {
     for (var attr in obj)
-      this.el.setAttribute(name, obj[attr]);
+      this.el.setAttribute(attr, obj[attr]);
     return this;
   };
 
