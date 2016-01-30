@@ -43,8 +43,9 @@ An exhaustive list of ways to use Korah:
 ```js
 kr('div', {'id': 'one'}, 'text');
 kr.div({'id': 'one'}, [
-  kr(tag, [/*...*/]),
-  kr(tag, {/*...*/}),
+  kr.p([/* just children */]),
+  kr.p({/* just attributes */}),
+  kr.p('just text'),
   'text',
 ]);
 ```
