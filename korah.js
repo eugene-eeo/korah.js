@@ -33,7 +33,7 @@
         ? children
         : [children]
       : [];
-    return createNode(tag, attrs || {}, children);
+    return createNode(tag, attrs, children);
   };
 
   kr.addTag = function(tag) {
