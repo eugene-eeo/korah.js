@@ -20,12 +20,19 @@
   }
 
   window.kr = function(tag, attrs, children) {
-    children = children || [];
-    return Array.isArray(attrs)
-      ? createNode(tag, {}, attrs)
-      : createNode(tag, attrs, Array.isArray(children)
+    if (attrs && (
+      typeof attrs == 'string'
+        || Array.isArray(attrs)
+        || attrs.nodeType)) {
+      children = attrs;
+      attrs = {};
+    }
+    children = children
+      ? Array.isArray(children)
         ? children
-        : [children]);
+        : [children]
+      : [];
+    return createNode(tag, attrs || {}, children);
   };
 
   kr.addTag = function(tag) {
