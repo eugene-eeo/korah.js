@@ -7,4 +7,4 @@
   'b', 'i', 'u',
   'hr', 'br', 'sub', 'sup',
   'input', 'button',
-].forEach(Korah.addTag);
+].forEach(kr.addTag);

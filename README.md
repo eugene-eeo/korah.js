@@ -1,4 +1,11 @@
-# Korah.js
+```
+   __                 __
+  / /_____  _______ _/ /
+ /  '_/ _ \/ __/ _ `/ _ \
+/_/\_\\___/_/  \_,_/_//_/.js
+```
+
+-----
 
 Sane, lightweight declarative DOM construction.
 
@@ -12,48 +19,34 @@ Works great with [evee.js](https://github.com/eugene-eeo/evee.js).
 ## Usage
 
 ```js
-var template = Korah(function(t, data) {
-  return t.div(
-    t.h1(data.title).attrs({id: 'title'}),
-    t.ul(data.features.map(function(text) {
-      return t.li(text);
-    }))
-  );
-});
-document.body.appendChild(template({
-  title: 'Korah',
-  features: ['simple', 'brain-dead easy']
-}));
+kr.div({id: 'container'}, kr.ul(
+  ['one', 'two', 'three'].map(function(text) {
+    return kr.li(text);
+  })
+));
 ```
 
+Returns
+
 ```html
-<div>
-  <h1 id='title'></h1>
+<div id='container'>
   <ul>
-    <li>simple</li>
-    <li>brain-dead easy</li>
+    <li>one</li>
+    <li>two</li>
+    <li>three</li>
   </ul>
 </div>
 ```
 
-Adding your own custom tags:
+An exhaustive list of ways to use Korah:
 
 ```js
-Korah.register('user', function(t, user) {
-  return t.div(
-    t.h2('@' + user.username),
-    t.p(user.biography),
-  ).attrs({'class': 'user'});
-});
-
-Korah.addTag('custom_elem');
-
-var template = Korah(function(t, data) {
-  return t.div(
-    t.custom_elem(),
-    t.user(data)
-  );
-});
+kr('div', {'id': 'one'}, 'text');
+kr.div({'id': 'one'}, [
+  kr(tag, [/*...*/]),
+  kr(tag, {/*...*/}),
+  'text',
+]);
 ```
 
 ## Installation

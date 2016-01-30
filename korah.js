@@ -1,43 +1,36 @@
-Korah = (function() {
-  'use strict';
+!function() {
+  function normalise(nodes) {
+    return nodes.reduce(function(rv, e) {
+      return rv.concat(Array.isArray(e)
+        ? normalise(e)
+        : e.nodeType
+          ? [e]
+          : [document.createTextNode(e)]);
+    }, []);
+  }
 
-  function toNodes(args) {
-    var ns = [];
-    for (var i = 0; i < args.length; i++) {
-      var arg = args[i];
-      if (arg instanceof Tag)      ns.push(arg.el);
-      else if (Array.isArray(arg)) ns = ns.concat(toNodes(arg));
-      else                ns.push(document.createTextNode(arg));
+  function createNode(tag, attrs, children) {
+    var node = document.createElement(tag);
+    normalise(children).forEach(function(el) {
+      node.appendChild(el);
+    });
+    for (var i in attrs)
+      node.setAttribute(i, attrs[i]);
+    return node;
+  }
+
+  window.kr = function(tag, attrs, children) {
+    children = children || [];
+    return Array.isArray(attrs)
+      ? createNode(tag, {}, attrs)
+      : createNode(tag, attrs, Array.isArray(children)
+        ? children
+        : [children]);
+  };
+
+  kr.addTag = function(tag) {
+    kr[tag] = function(attrs, children) {
+      return kr(tag, attrs, children);
     };
-    return ns;
-  };
-
-  function Tag(tag, nodes) {
-    var el = this.el = document.createElement(tag);
-    toNodes(nodes || []).forEach(el.appendChild.bind(el));
-  };
-
-  Tag.prototype.attrs = function(obj) {
-    for (var attr in obj)
-      this.el.setAttribute(attr, obj[attr]);
-    return this;
-  };
-
-  var tags = {};
-  var fn = function(fn) {
-    return function(data) {
-      return fn(tags, data).el;
-    };
-  };
-  fn.Tag = Tag;
-  fn.tags = tags;
-  fn.register = function(name, f) {
-    tags[name] = f.bind(null, tags);
-  };
-  fn.addTag = function(tag) {
-    tags[tag] = function() {
-      return new Tag(tag, arguments);
-    };
-  };
-  return fn;
-})();
+  }
+}();
