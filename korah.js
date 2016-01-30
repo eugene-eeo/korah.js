@@ -9,6 +9,10 @@
     }, []);
   }
 
+  function isObject(obj) {
+    return {}.toString.call(obj) === '[object Object]'
+  }
+
   function createNode(tag, attrs, children) {
     var node = document.createElement(tag);
     normalise(children).forEach(function(el) {
@@ -20,10 +24,7 @@
   }
 
   window.kr = function(tag, attrs, children) {
-    if (attrs && (
-      typeof attrs == 'string'
-        || Array.isArray(attrs)
-        || attrs.nodeType)) {
+    if (attrs && !isObject(attrs)) {
       children = attrs;
       attrs = {};
     }

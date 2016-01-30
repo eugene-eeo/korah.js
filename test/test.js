@@ -16,7 +16,7 @@ describe('kr', function() {
     ];
     divs.forEach(function(div) {
       var ch = [].slice.call(div.children);
-      assert(ch[0].matches('span'),  'tagName is span');
+      assert(ch[0].matches('span'));
     });
   });
 
@@ -31,5 +31,17 @@ describe('kr', function() {
       assert(span.matches('div#one > span'));
     });
     assert(kr('div', attr, 'text').textContent === 'text');
+  });
+});
+
+describe('kr.addTag', function() {
+  it('adds an attribute on the kr global', function() {
+    kr.addTag('iron');
+    assert.isFunction(kr.iron);
+  });
+  it('can be called', function() {
+    var iron = kr.iron({'name': 'one'}, 'span');
+    assert(iron.matches('iron[name=one]'));
+    assert(iron.textContent == 'span');
   });
 });
