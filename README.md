@@ -50,6 +50,19 @@ kr.div({'id': 'one'}, [
 ]);
 ```
 
+If you want to extend the basic bindings you can do:
+
+```js
+kr.addTag('element');
+
+kr.element = function(foo, bar) {
+  return kr('element', [
+    kr('span', foo),
+    kr('span', bar)
+  ]);
+};
+```
+
 ## Installation
 
 ```js
