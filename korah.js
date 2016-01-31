@@ -35,5 +35,5 @@
     kr[tag] = function(attrs, children) {
       return kr(tag, attrs, children);
     };
-  }
+  };
 }();
