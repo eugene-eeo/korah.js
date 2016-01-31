@@ -1,4 +1,6 @@
 !function() {
+  'use strict';
+
   function normalise(nodes) {
     return nodes.reduce(function(rv, e) {
       return rv.concat(Array.isArray(e)
@@ -11,9 +13,7 @@
 
   function createNode(tag, attrs, children) {
     var node = document.createElement(tag);
-    normalise(children).forEach(function(el) {
-      node.appendChild(el);
-    });
+    normalise(children).forEach(node.appendChild.bind(node));
     for (var i in attrs)
       node.setAttribute(i, attrs[i]);
     return node;
