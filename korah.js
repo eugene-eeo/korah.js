@@ -20,7 +20,7 @@
   }
 
   window.kr = function(tag, attrs, children) {
-    if (attrs && {}.toString.call(attrs) != '[object Object]') {
+    if (attrs && {}.toString.call(attrs) !== '[object Object]') {
       children = attrs;
       attrs = {};
     }
