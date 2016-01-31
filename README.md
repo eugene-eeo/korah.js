@@ -9,7 +9,7 @@
 
 Sane, lightweight declarative DOM construction.
 
- - Weighs in at ~0.8kB minified with bindings.
+ - Weighs in at ~0.7kB minified with bindings.
  - Extensible with [bindings](bindings/) for HTML tags.
  - Fully ES5 compliant codebase.
  - No string parsing/hacks.
