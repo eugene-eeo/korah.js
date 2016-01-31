@@ -16,6 +16,12 @@
   <script src="../bindings/basic.js"></script>
   <script>
   assert = chai.assert;
+  !function() {
+    var ep = Element.prototype;
+    ep.matches = (ep.matches
+      || ep.mozMatchesSelector
+      || ep.webkitMatchesSelector);
+  }();
   </script>
 
   <script src="test.js"></script>

@@ -9,10 +9,6 @@
     }, []);
   }
 
-  function isObject(obj) {
-    return {}.toString.call(obj) === '[object Object]'
-  }
-
   function createNode(tag, attrs, children) {
     var node = document.createElement(tag);
     normalise(children).forEach(function(el) {
@@ -24,16 +20,15 @@
   }
 
   window.kr = function(tag, attrs, children) {
-    if (attrs && !isObject(attrs)) {
+    if (attrs && {}.toString.call(attrs) != '[object Object]') {
       children = attrs;
       attrs = {};
     }
-    children = children
+    return createNode(tag, attrs, children
       ? Array.isArray(children)
         ? children
         : [children]
-      : [];
-    return createNode(tag, attrs, children);
+      : []);
   };
 
   kr.addTag = function(tag) {
