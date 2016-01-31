@@ -1,7 +1,7 @@
 describe('kr', function() {
   it('accepts the (tag) form', function() {
     var el = kr('p');
-    assert(el.tagName.toLowerCase() === 'p');
+    assert(el.matches('p'));
   });
 
   it('accepts the (tag, attr) form', function() {
