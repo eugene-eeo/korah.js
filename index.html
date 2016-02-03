@@ -10,6 +10,9 @@ body {
   margin: 4em auto;
   width: 25em;
 }
+p {
+  font-size: 1.1em;
+}
 pre, textarea {
   font-family: Consolas, Monaco, monospace;
 }
@@ -21,7 +24,7 @@ pre, textarea {
   line-height: 0.99em;
 }
 textarea {
-  padding: 0.3em;
+  padding: 0.5em;
   background-color: #FAFAFA;
   width: 100%;
   border: 1px solid #EEE;
@@ -55,7 +58,7 @@ textarea {
     Sane, lightweight, declarative and depdendency free
     library for creating DOM nodes with style.
   </p>
-  <textarea id='code'>
+  <textarea id='code' spellcheck='false'>
 kr.div({id: 'container'}, kr.ul(
   ['one', 'two', 'three'].map(function(t) {
     return kr.li(t);
@@ -90,12 +93,13 @@ kr.div({id: 'container'}, kr.ul(
       return;
     }
     output.textContent = html_beautify(temp.innerHTML, {
-      'indent_inner_html': false,
+      'indent_inner_html': true,
       'indent_size': 2,
       'indent_char': ' ',
       'brace_style': 'expand',
       'preserve_newlines': true,
       'indent_handlebars': false,
+      'extra_liners': ['head', 'body', 'span'],
     });
   }
 
