@@ -19,8 +19,10 @@
     return node;
   }
 
+  var type = {}.toString;
+
   window.kr = function(tag, attrs, children) {
-    if (attrs && {}.toString.call(attrs) !== '[object Object]') {
+    if (attrs && type.call(attrs) !== '[object Object]') {
       children = attrs;
       attrs = {};
     }
