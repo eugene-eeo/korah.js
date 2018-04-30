@@ -13,7 +13,6 @@
   <script>mocha.setup('bdd')</script>
 
   <script src="../korah.js"></script>
-  <script src="../bindings/basic.js"></script>
   <script>
   assert = chai.assert;
   !function() {
@@ -26,8 +25,8 @@
 
   <script src="test.js"></script>
   <script> 
+    mocha.globals(['kr']);
     mocha.checkLeaks();
-    mocha.globals(['Korah']);
     mocha.run();
   </script>
 </body>

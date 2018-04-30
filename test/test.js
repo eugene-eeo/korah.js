@@ -1,47 +1,63 @@
+/*jshint esversion: 6 */
+
 describe('kr', function() {
-  it('accepts the (tag) form', function() {
-    var el = kr('p');
-    assert(el.matches('p'));
-  });
-
-  it('accepts the (tag, attr) form', function() {
-    var el = kr('p', {id: 'one'});
-    assert(el.matches('p#one'));
-  });
-
-  it('accepts the (tag, children) form', function() {
-    var divs = [
-      kr('div', [kr('span')]),
-      kr('div', kr('span')),
+    var selectors = [
+        // test the selector parsing
+        ['div', x => x.tagName === 'DIV'],
+        ['#id', x => x.matches('div#id')],
+        ['.klass', x => x.matches('div.klass')],
+        ['p#id', x => x.matches('p#id')],
+        ['p#id.klass', x => x.matches('p.klass#id')],
+        ['p.klass#id', x => x.matches('p.klass#id')],
+        ['p.klass1.klass2#id', x => x.matches('p.klass1.klass2#id')],
     ];
-    divs.forEach(function(div) {
-      var ch = [].slice.call(div.children);
-      assert(ch[0].matches('span'));
-    });
-  });
 
-  it('accepts the (tag, attr, children) form', function() {
-    var attr = {id: 'one'};
-    var divs = [
-      kr('div', attr, [kr('span')]),
-      kr('div', attr, kr('span')),
+    var children = [
+        // check that normalisation of the child nodes works
+        [['text'], x => x.textContent === 'text'],
+        [[[['text']]], x => x.textContent === 'text'],
+        [[kr('#ok')], x => x.children[0].matches('div#ok')],
+        [[['text', kr('#ok')]], x => x.textContent === 'text' && x.children[0].matches('div#ok')],
     ];
-    divs.forEach(function(div) {
-      var span = div.querySelector('span');
-      assert(span.matches('div#one > span'));
-    });
-    assert(kr('div', attr, 'text').textContent === 'text');
-  });
-});
 
-describe('kr.addTag', function() {
-  it('adds an attribute on the kr global', function() {
-    kr.addTag('iron');
-    assert.isFunction(kr.iron);
-  });
-  it('can be called', function() {
-    var iron = kr.iron({'name': 'one'}, 'span');
-    assert(iron.matches('iron[name=one]'));
-    assert(iron.textContent == 'span');
-  });
+    var attrs = [
+        // check that attributes are added
+        [{a: 1, b: 2, c: "cee"}, x => x.matches('[a="1"][b="2"][c=cee]')],
+    ];
+
+    var cases = [];
+    selectors.forEach(([x, t1]) => {
+        // test kr(x)
+        cases.push([[x], t1]);
+
+        children.forEach(([c, t2]) => {
+            // test kr(x, c)
+            cases.push([ [x].concat(c), e => t1(e) && t2(e) ]);
+            attrs.forEach(([a, t3]) => {
+                // test kr(x, a)
+                cases.push([ [x, a], e => t1(e) && t3(e) ]);
+                // test kr(x, a, c)
+                cases.push([ [x, a].concat(c), e => t1(e) && t2(e) && t3(e) ]);
+            });
+        });
+    });
+
+    var i = 0;
+    cases.forEach(([args, test]) => it(args, () => {
+        i++;
+        var el = kr.apply(null, args);
+        try {
+            var z = test(el);
+            if (!z) {
+                console.log("[" + i + "]");
+                console.log(el);
+            }
+            assert(z, ""+i);
+        } catch(err) {
+            console.log("["+i+"]:");
+            console.log(args);
+            console.log(err);
+            throw err;
+        }
+    }));
 });

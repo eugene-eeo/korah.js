@@ -5,66 +5,67 @@
 /_/\_\\___/_/  \_,_/_//_/.js
 ```
 
------
+Sane, lightweight (0.8kB minified), declarative and extensively tested DOM construction.
+Drop the `korah.js` file into your project, include it in a script tag and you're done.
+It exposes a single global, `kr`.
 
-Sane, lightweight declarative DOM construction.
+## `kr(tag, attrs, children)`
 
- - Weighs in at ~0.7kB minified with bindings.
- - Extensible with [bindings](bindings/) for HTML tags.
- - Fully ES5 compliant codebase.
- - No string parsing/hacks.
+ - Builds and returns a DOM element with tag = `tag`. `tag` can also be a selector in the form:
 
-Works great with [evee.js](https://github.com/eugene-eeo/evee.js).
+   | selector     | result                      |
+   |--------------|-----------------------------|
+   | `#id`        | `<div id="id">`             |
+   | `.klass`     | `<div id="klass">`          |
+   | `p#id`       | `<p id="id">`               |
+   | `p.klass`    | `<p class="klass">`         |
+   | `p.klass#id` | `<p class="klass" id="id">` |
+   | `p.k1.k2#id` | `<p class="k1 k2" id="id">` |
 
-## Usage
+ - `attrs` is an object whose keys will be used as attributes and will be added to the
+   created element. If `attrs` is to be used as the second argument it needs to be an
+   object. Else the `attrs` argument willbe interpreted as `children`. For instance:
+
+   ```js
+   kr('p', {"a": "b"}) // => <p a="b">
+   kr('p', ["a"])      // => <p>a</p>
+   ```
+
+ - `children` can be either a string, a node, or an array of strings / nodes / array of (...).
+   If `children` is given, it will be recursively flattened and it's contents are added
+   to the element appropriately.
+
+An (almost) exhaustive list of ways to use `kr`:
 
 ```js
-kr.div({id: 'container'}, kr.ul(
-  ['one', 'two', 'three'].map(function(text) {
-    return kr.li(text);
-  })
-));
+kr('div')
+kr('div.klass', kr('p'))
+kr('div.klass', {attr: "something"})
+kr('div.klass#id', "text")
+kr('#id', {"data-bind": "data"}, [
+    [ /* more children */ ],
+    kr('span.klass'), // child element
+    "text",           // text
+]);
 ```
 
-Returns
+### Example:
+
+```js
+kr('#container',
+  kr('ul.wrapper',
+    ['one', 'two', 'three'].map(x => kr('li', x))
+))
+```
+
+generates the following:
 
 ```html
 <div id='container'>
-  <ul>
+  <ul class='wrapper'>
     <li>one</li>
     <li>two</li>
     <li>three</li>
   </ul>
 </div>
-```
-
-An exhaustive list of ways to use Korah:
-
-```js
-kr('div', {'id': 'one'}, 'text');
-kr.div({'id': 'one'}, [
-  kr.p([/* just children */]),
-  kr.p({/* just attributes */}),
-  kr.p('just text'),
-  'text',
-]);
-```
-
-If you want to extend the basic bindings you can do:
-
-```js
-kr.addTag('element');
-
-kr.element = function(foo, bar) {
-  return kr('element', [
-    kr('span', foo),
-    kr('span', bar)
-  ]);
-};
-```
-
-## Installation
-
-```js
-$ bower install eugene-eeo/korah.js
 ```
