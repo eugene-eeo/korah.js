@@ -57,9 +57,9 @@ textarea {
     library for creating DOM nodes with style.
   </p>
   <textarea id='code' spellcheck='false'>
-kr.div({id: 'container'}, kr.ul(
+kr('#container', kr('ul',
   ['one', 'two', 'three'].map(function(t) {
-    return kr.li(t);
+    return kr('li', t);
   })
 ));</textarea>
   <pre id='output'></pre>
@@ -86,10 +86,10 @@ kr.div({id: 'container'}, kr.ul(
   function handler(event) {
     var code = input.value;
     try {
-      var temp = kr.div(eval('(function(){return ' + code + ';})()'));
+      var temp = kr('div', eval('(function(){return ' + code + ';})()'));
     } catch (err) {
       output.innerHTML = '';
-      output.appendChild(kr.div({'class': 'error'}, err.message));
+      output.appendChild(kr('.error', err.message));
       return;
     }
     output.textContent = html_beautify(temp.innerHTML, {
