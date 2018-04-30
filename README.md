@@ -27,8 +27,10 @@ It exposes a single global, `kr`.
    object. Else the `attrs` argument willbe interpreted as `children`. For instance:
 
    ```js
-   kr('p', {"a": "b"}) // => <p a="b">
-   kr('p', ["a"])      // => <p>a</p>
+   kr('p')                      // => <p>
+   kr('p', {a: "b"})            // => <p a="b">
+   kr('p', ["a"])               // => <p>a</p>
+   kr('p', {id: "one"}, ["a"])  // => <p id="one">a</p>
    ```
 
  - `children` can be either a string, a node, or an array of strings / nodes / array of (...).
