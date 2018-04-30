@@ -50,11 +50,7 @@
             attrs = {};
         }
         var info = parseSelector(tag);
-        var el = createNode(
-            info.tagName,
-            attrs,
-            normalise(children || [])
-        );
+        var el = createNode(info.tagName, attrs, normalise(children || []));
         if (info.id) {
             el.id = info.id;
         }
