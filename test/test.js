@@ -3,7 +3,7 @@
 describe('kr', function() {
     var selectors = [
         // test the selector parsing
-        ['div', x => x.tagName === 'DIV'],
+        ['div', x => x.matches('div')],
         ['#id', x => x.matches('div#id')],
         ['.klass', x => x.matches('div.klass')],
         ['p#id', x => x.matches('p#id')],
@@ -17,7 +17,8 @@ describe('kr', function() {
         [['text'], x => x.textContent === 'text'],
         [[[['text']]], x => x.textContent === 'text'],
         [[kr('#ok')], x => x.children[0].matches('div#ok')],
-        [[['text', kr('#ok')]], x => x.textContent === 'text' && x.children[0].matches('div#ok')],
+        [[kr('.one'), kr('.two')], x => (x.children[0].matches('div.one') && x.children[1].matches('div.two'))],
+        [['text', kr('#ok')], x => x.textContent === 'text' && x.children[0].matches('div#ok')],
     ];
 
     var attrs = [

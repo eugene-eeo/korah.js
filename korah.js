@@ -26,7 +26,6 @@
     }
 
     function normalise(nodes) {
-        nodes = (type.call(nodes) === ARRAY) ? nodes : [nodes];
         return nodes.reduce(function(rv, e) {
             return rv.concat((type.call(e) === ARRAY)
                 ? normalise(e)
@@ -36,27 +35,35 @@
         }, []);
     }
 
-    function createNode(tag, attrs, children) {
-        var node = document.createElement(tag);
-        children.forEach(node.appendChild.bind(node));
-        for (var i in attrs)
-            node.setAttribute(i, attrs[i]);
+    function createNode(selector, attrs, children) {
+        var info = parseSelector(selector);
+        if (info.id) {
+            attrs.id = info.id;
+        }
+        var node = document.createElement(info.tagName);
+        for (var i = 0; i < children.length; i++) {
+            node.appendChild(children[i]);
+        }
+        for (var k in attrs) {
+            node.setAttribute(k, attrs[k]);
+        }
+        for (var i = 0; i < info.classes.length; i++) {
+            node.classList.add(info.classes[i]);
+        }
         return node;
     }
 
-    window.kr = function(tag, attrs, children) {
-        if (attrs && type.call(attrs) !== OBJECT) {
-            children = attrs;
-            attrs = {};
+    window.kr = function(selector) {
+        var attrs = {};
+        var children = [];
+        for (var i = 1; i < arguments.length; i++) {
+            var o = arguments[i];
+            if (type.call(o) === OBJECT) {
+                for (var k in o) attrs[k] = o[k];
+                continue;
+            }
+            children.push(o);
         }
-        var info = parseSelector(tag);
-        var el = createNode(info.tagName, attrs, normalise(children || []));
-        if (info.id) {
-            el.id = info.id;
-        }
-        for (var i = 0; i < info.classes.length; i++) {
-            el.classList.add(info.classes[i]);
-        }
-        return el;
+        return createNode(selector, attrs, normalise(children));
     };
 }();
