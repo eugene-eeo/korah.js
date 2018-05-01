@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-describe('kr', function() {
+describe('kr', () => {
     var selectors = [
         // test the selector parsing
         ['div', x => x.matches('div')],

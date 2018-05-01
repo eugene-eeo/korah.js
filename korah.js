@@ -1,9 +1,7 @@
 !function() {
     'use strict';
 
-    var type = {}.toString,
-        ARRAY  = '[object Array]',
-        OBJECT = '[object Object]';
+    var type = {}.toString;
 
     function find_all(regexp, text) {
         var matches = [];
@@ -27,7 +25,7 @@
 
     function normalise(nodes) {
         return nodes.reduce(function(rv, e) {
-            return rv.concat((type.call(e) === ARRAY)
+            return rv.concat((type.call(e) === '[object Array]')
                 ? normalise(e)
                 : (e.nodeType
                     ? [e]
@@ -58,7 +56,7 @@
         var children = [];
         for (var i = 1; i < arguments.length; i++) {
             var o = arguments[i];
-            if (type.call(o) === OBJECT) {
+            if (type.call(o) === '[object Object]') {
                 for (var k in o) attrs[k] = o[k];
                 continue;
             }
