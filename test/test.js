@@ -39,6 +39,8 @@ describe('kr', function() {
                 cases.push([ [x, a], e => t1(e) && t3(e) ]);
                 // test kr(x, a, c)
                 cases.push([ [x, a].concat(c), e => t1(e) && t2(e) && t3(e) ]);
+                cases.push([ [x, a, c], e => t1(e) && t2(e) && t3(e) ]);
+                cases.push([ [x, c, a], e => t1(e) && t2(e) && t3(e) ]);
             });
         });
     });
